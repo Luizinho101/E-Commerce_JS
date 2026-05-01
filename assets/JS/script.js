@@ -14,6 +14,7 @@ async function fetchDados() {
                 <li>
                     <p>${produto.title}</p>
                     <p>${produto.price}</p>
+                   <img src="${produto.thumbnail}" width="200">
                     <button type="button" onclick="detalhes(${produto.id})">Ver</button>
                 </li>
             `;
