@@ -10,15 +10,23 @@ async function fetchDados() {
         let p = '';
 
         produtos.products.forEach(produto => {
-            p += `
-                <li>
-                    <p>${produto.title}</p>
-                    <p>${produto.price}</p>
-                   <img src="${produto.thumbnail}" width="200">
-                    <button type="button" onclick="detalhes(${produto.id})">Ver</button>
-                </li>
+        p += `
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img src="${produto.thumbnail}" class="card-img-top">
+
+                    <div class="card-body">
+                        <h5 class="card-title">${produto.title}</h5>
+                        <p class="card-text">R$ ${produto.price}</p>
+
+                        <button class="btn btn-primary" onclick="detalhes(${produto.id})">
+                            Ver detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
             `;
-        });
+            });
 
         container.innerHTML = p;
 
