@@ -50,10 +50,31 @@ async function detalhes(idProduto) {
             <p>${produto.description}</p>
             <img src="${produto.thumbnail}" width="200">
             <br><br>
+           <button onclick="carrinho(${idProduto}, ${produto.price})">Adicionar ao Carrinho</button>
             <button onclick="fetchDados()">Voltar</button>
         `;
 
     } catch (erro) {
         console.error('Erro ao buscar detalhes', erro);
     }
+}
+
+function carrinho(idProduto , preco ){
+
+    let itens = 0; 
+
+    const prod = { id: idProduto, preco : preco};
+   
+    const json = JSON.stringify(prod);
+
+    localStorage.setItem(idProduto, json);
+
+    itens = localStorage.length;
+   
+    const componente = document.getElementById('carrinho-resposta');
+    componente.innerHTML = itens;
+}
+
+function verCarrinho(){
+    
 }
