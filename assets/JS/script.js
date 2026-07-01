@@ -2,6 +2,9 @@
 
 async function fetchDados() {
     const container = document.getElementById('resultado');
+
+    const itens = document.getElementById('carrinho-resposta');
+
     try {
         const URL = "https://dummyjson.com/products";
         const resposta = await fetch(URL);
@@ -29,6 +32,8 @@ async function fetchDados() {
             });
 
         container.innerHTML = p;
+
+        itens.innerHTML = localStorage.length;
 
     } catch (erro) {
         console.error('Erro na api', erro);
@@ -75,6 +80,70 @@ function carrinho(idProduto , preco ){
     componente.innerHTML = itens;
 }
 
-function verCarrinho(){
+function verCarrinho() {
+    const container = document.getElementById('resultado');
     
+    
+    if (localStorage.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <h3>Seu carrinho está vazio 🛒</h3>
+                <button class="btn btn-primary mt-3" onclick="fetchDados()">Voltar às compras</button>
+            </div>
+        `;
+        return;
+    }
+
+    let tabelaItens = '';
+    let totalGeral = 0;
+
+    
+    for (let i = 0; i < localStorage.length; i++) {
+        let chave = localStorage.key(i);
+        
+    
+        if (chave !== "" && !isNaN(Number(chave))) {
+            let produtoJson = localStorage.getItem(chave);
+            let produto = JSON.parse(produtoJson);
+            
+            totalGeral += Number(produto.preco);
+
+            tabelaItens += `
+                <tr>
+                    <td>ID: ${produto.id}</td>
+                    <td>Produto #${produto.id}</td>
+                    <td>R$ ${Number(produto.preco).toFixed(2)}</td>
+                </tr>
+            `;
+        }
+    }
+
+
+    container.innerHTML = `
+        <div class="col-12 m-auto mt-4" style="max-width: 600px;">
+            <h2 class="mb-4">Seu Carrinho</h2>
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Item</th>
+                        <th>Preço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tabelaItens}
+                </tbody>
+                <tfoot>
+                    <tr class="table-dark">
+                        <td colspan="2"><strong>Total geral:</strong></td>
+                        <td><strong>R$ ${totalGeral.toFixed(2)}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="d-flex gap-2 justify-content-end mt-3">
+                <button class="btn btn-secondary" onclick="fetchDados()">Voltar</button>
+                <button class="btn btn-danger" onclick="limparCarrinhoCompleto()">Esvaziar Carrinho</button>
+            </div>
+        </div>
+    `;
 }
