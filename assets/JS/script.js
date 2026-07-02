@@ -55,7 +55,7 @@ async function detalhes(idProduto) {
             <p>${produto.description}</p>
             <img src="${produto.thumbnail}" width="200">
             <br><br>
-           <button onclick="carrinho(${idProduto}, ${produto.price})">Adicionar ao Carrinho</button>
+           <button onclick="carrinho(${idProduto}, ${produto.price}, '${produto.title}')">Adicionar ao Carrinho</button>
             <button onclick="fetchDados()">Voltar</button>
         `;
 
@@ -64,11 +64,11 @@ async function detalhes(idProduto) {
     }
 }
 
-function carrinho(idProduto , preco ){
+function carrinho(idProduto , preco , titulo ){
 
     let itens = 0; 
 
-    const prod = { id: idProduto, preco : preco};
+    const prod = { id: idProduto, preco : preco, titulo: titulo};
    
     const json = JSON.stringify(prod);
 
@@ -111,7 +111,7 @@ function verCarrinho() {
             tabelaItens += `
                 <tr>
                     <td>ID: ${produto.id}</td>
-                    <td>Produto #${produto.id}</td>
+                    <td>${produto.titulo}</td>
                     <td>R$ ${Number(produto.preco).toFixed(2)}</td>
                 </tr>
             `;
