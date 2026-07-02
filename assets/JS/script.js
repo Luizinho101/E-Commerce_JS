@@ -113,6 +113,9 @@ function verCarrinho() {
                     <td>ID: ${produto.id}</td>
                     <td>${produto.titulo}</td>
                     <td>R$ ${Number(produto.preco).toFixed(2)}</td>
+                    <td><button class="btn btn-danger" onclick="reverItemCarrinho(${produto.id})"><img src="/assets/img/icons8-lixeira.svg" alt="..."></button></td>
+                    
+                   
                 </tr>
             `;
         }
@@ -146,4 +149,9 @@ function verCarrinho() {
             </div>
         </div>
     `;
+}
+
+function reverItemCarrinho(idItem){
+    localStorage.removeItem(idItem);
+    verCarrinho();
 }
