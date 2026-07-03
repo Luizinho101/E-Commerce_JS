@@ -33,7 +33,7 @@ async function fetchDados() {
 
         container.innerHTML = p;
 
-        itens.innerHTML = localStorage.length;
+        atualizarContadorHeader();
 
     } catch (erro) {
         console.error('Erro na api', erro);
@@ -74,10 +74,11 @@ function carrinho(idProduto , preco , titulo ){
 
     localStorage.setItem(idProduto, json);
 
-    itens = localStorage.length;
+
    
     const componente = document.getElementById('carrinho-resposta');
-    componente.innerHTML = itens;
+
+    atualizarContadorHeader();
 }
 
 function verCarrinho() {
@@ -149,14 +150,31 @@ function verCarrinho() {
             </div>
         </div>
     `;
+    atualizarContadorHeader();
 }
 
 function reverItemCarrinho(idItem){
     localStorage.removeItem(idItem);
+    atualizarContadorHeader();
     verCarrinho();
 }
 
 function limparCarrinhoCompleto(){
     localStorage.clear();
+    atualizarContadorHeader();
     verCarrinho();
+}
+
+function atualizarContadorHeader() {
+    const componente = document.getElementById('carrinho-resposta');
+    if (componente) {
+        let totalItensValidos = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+            let chave = localStorage.key(i);
+            if (chave !== "" && !isNaN(Number(chave))) {
+                totalItensValidos++;
+            }
+        }
+        componente.innerHTML = totalItensValidos;
+    }
 }
