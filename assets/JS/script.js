@@ -51,15 +51,44 @@ async function detalhes(idProduto) {
 
         const tituloEscapado = produto.title.replace(/'/g, "\\'");
 
-        container.innerHTML = `
-            <h2>${produto.title}</h2>
-            <p>Preço: ${produto.price}</p>
-            <p>${produto.description}</p>
-            <img src="${produto.thumbnail}" width="200">
-            <br><br>
-           <button onclick="carrinho(${idProduto}, ${produto.price}, '${produto.title}')">Adicionar ao Carrinho</button>
-            <button onclick="fetchDados()">Voltar</button>
-        `;
+      container.innerHTML = `
+    <div class="col-12 mt-4">
+        <button class="btn btn-outline-secondary mb-4" onclick="fetchDados()">
+            ← Voltar para a loja
+        </button>
+
+        <div class="card shadow-sm p-4">
+            <div class="row g-4 align-items-center">
+                
+                <div class="col-md-5 text-center">
+                    <img src="${produto.thumbnail}" alt="${produto.title}" class="img-fluid rounded bg-light p-3" style="max-height: 350px; object-fit: contain;">
+                </div>
+
+                <div class="col-md-7">
+                    <span class="badge bg-secondary mb-2">${produto.category || 'Produto'}</span>
+                    <h2 class="fw-bold mb-2">${produto.title}</h2>
+                    <p class="text-muted mb-4">${produto.description}</p>
+                    
+                    <div class="mb-4">
+                        <span class="text-muted small d-block">Preço à vista</span>
+                        <h3 class="text-success fw-bold">R$ ${Number(produto.price).toFixed(2)}</h3>
+                    </div>
+
+                    <div class="d-grid gap-2 d-sm-flex">
+                        <button class="btn btn-success btn-lg px-4" onclick="carrinho(${idProduto}, ${produto.price}, '${tituloEscapado}'); verCarrinho();">
+                            Comprar Agora
+                        </button>
+                        
+                        <button class="btn btn-outline-primary btn-lg px-4" onclick="carrinho(${idProduto}, ${produto.price}, '${tituloEscapado}')">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+`;
 
     } catch (erro) {
         console.error('Erro ao buscar detalhes', erro);
