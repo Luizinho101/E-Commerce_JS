@@ -13,7 +13,7 @@ async function fetchDados() {
         let p = '';
 
         produtos.products.forEach(produto => {
-        p += `
+            p += `
             <div class="col-md-4">
                 <div class="card h-100">
                     <img src="${produto.thumbnail}" class="card-img-top">
@@ -29,7 +29,7 @@ async function fetchDados() {
                 </div>
             </div>
             `;
-            });
+        });
 
         container.innerHTML = p;
 
@@ -64,18 +64,18 @@ async function detalhes(idProduto) {
     }
 }
 
-function carrinho(idProduto , preco , titulo ){
+function carrinho(idProduto, preco, titulo) {
 
-    let itens = 0; 
+    let itens = 0;
 
-    const prod = { id: idProduto, preco : preco, titulo: titulo};
-   
+    const prod = { id: idProduto, preco: preco, titulo: titulo };
+
     const json = JSON.stringify(prod);
 
     localStorage.setItem(idProduto, json);
 
 
-   
+
     const componente = document.getElementById('carrinho-resposta');
 
     atualizarContadorHeader();
@@ -83,8 +83,8 @@ function carrinho(idProduto , preco , titulo ){
 
 function verCarrinho() {
     const container = document.getElementById('resultado');
-    
-    
+
+
     if (localStorage.length === 0) {
         container.innerHTML = `
             <div class="col-12 text-center py-5">
@@ -98,15 +98,15 @@ function verCarrinho() {
     let tabelaItens = '';
     let totalGeral = 0;
 
-    
+
     for (let i = 0; i < localStorage.length; i++) {
         let chave = localStorage.key(i);
-        
-    
+
+
         if (chave !== "" && !isNaN(Number(chave))) {
             let produtoJson = localStorage.getItem(chave);
             let produto = JSON.parse(produtoJson);
-            
+
             totalGeral += Number(produto.preco);
 
             tabelaItens += `
@@ -114,7 +114,7 @@ function verCarrinho() {
                     <td>ID: ${produto.id}</td>
                     <td>${produto.titulo}</td>
                     <td>R$ ${Number(produto.preco).toFixed(2)}</td>
-                    <td><button class="btn btn-danger" onclick="reverItemCarrinho(${produto.id})"><img src="/assets/img/icons8-lixeira.svg" alt="..."></button></td>
+                   <td class="text-center"><button class="btn btn-outline-danger btn-sm" onclick="reverItemCarrinho(${produto.id})"><img src="/assets/img/icons8-lixeira.svg" alt="Deletar"></button></td>
                     
                    
                 </tr>
@@ -126,13 +126,13 @@ function verCarrinho() {
     container.innerHTML = `
         <div class="col-12 m-auto mt-4" style="max-width: 600px;">
             <h2 class="mb-4">Seu Carrinho</h2>
-            <table class="table table-striped align-middle">
-                <thead>
+            <table class="table table-striped table-hover align-middle shadow-sm rounded">
+                <thead class="table-primary">
                     <tr>
                         <th>Código</th>
                         <th>Item</th>
                         <th>Preço</th>
-                    </tr>
+                        <th class="text-center">Ações</th> </tr>
                 </thead>
                 <tbody>
                     ${tabelaItens}
@@ -140,8 +140,7 @@ function verCarrinho() {
                 <tfoot>
                     <tr class="table-dark">
                         <td colspan="2"><strong>Total geral:</strong></td>
-                        <td><strong>R$ ${totalGeral.toFixed(2)}</strong></td>
-                    </tr>
+                        <td colspan="2"><strong>R$ ${totalGeral.toFixed(2)}</strong></td> </tr>
                 </tfoot>
             </table>
             <div class="d-flex gap-2 justify-content-end mt-3">
@@ -153,13 +152,13 @@ function verCarrinho() {
     atualizarContadorHeader();
 }
 
-function reverItemCarrinho(idItem){
+function reverItemCarrinho(idItem) {
     localStorage.removeItem(idItem);
     atualizarContadorHeader();
     verCarrinho();
 }
 
-function limparCarrinhoCompleto(){
+function limparCarrinhoCompleto() {
     localStorage.clear();
     atualizarContadorHeader();
     verCarrinho();
