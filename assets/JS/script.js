@@ -48,6 +48,8 @@ async function detalhes(idProduto) {
         const produto = await resposta.json();
 
         const container = document.getElementById('resultado');
+        
+        const tituloEscapado = produto.title.replace(/'/g, "\\'");
 
         container.innerHTML = `
             <h2>${produto.title}</h2>
