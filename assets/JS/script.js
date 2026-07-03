@@ -155,3 +155,8 @@ function reverItemCarrinho(idItem){
     localStorage.removeItem(idItem);
     verCarrinho();
 }
+
+function limparCarrinhoCompleto(){
+    localStorage.clear();
+    verCarrinho();
+}
