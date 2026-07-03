@@ -48,7 +48,7 @@ async function detalhes(idProduto) {
         const produto = await resposta.json();
 
         const container = document.getElementById('resultado');
-        
+
         const tituloEscapado = produto.title.replace(/'/g, "\\'");
 
         container.innerHTML = `
@@ -81,6 +81,8 @@ function carrinho(idProduto, preco, titulo) {
     const componente = document.getElementById('carrinho-resposta');
 
     atualizarContadorHeader();
+
+    alert(`${titulo} foi adicionado ao seu carrinho! 🛒`);
 }
 
 function verCarrinho() {
