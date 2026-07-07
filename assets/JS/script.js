@@ -1,8 +1,5 @@
-
-
 async function fetchDados() {
     const container = document.getElementById('resultado');
-
     const itens = document.getElementById('carrinho-resposta');
 
     try {
@@ -14,15 +11,30 @@ async function fetchDados() {
 
         produtos.products.forEach(produto => {
             p += `
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="${produto.thumbnail}" class="card-img-top">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 g-4">
+                <div class="card h-100 border-0 shadow-sm custom-card">
+                    
+                    <div class="bg-light d-flex align-items-center justify-content-center rounded-top" style="height: 200px; overflow: hidden;">
+                        <img src="${produto.thumbnail}" class="img-fluid p-3" alt="${produto.title}" style="max-height: 100%; object-fit: contain;">
+                    </div>
 
-                    <div class="card-body">
-                        <h5 class="card-title">${produto.title}</h5>
-                        <p class="card-text">R$ ${produto.price}</p>
+                    <div class="card-body d-flex flex-column p-3">
+                        <span class="text-uppercase text-muted small fw-bold mb-1" style="font-size: 0.75rem;">
+                            ${produto.category || 'Produto'}
+                        </span>
+                        
+                        <h6 class="card-title text-dark fw-semibold mb-2 text-truncate-2" style="height: 44px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            ${produto.title}
+                        </h6>
 
-                        <button class="btn btn-primary" onclick="detalhes(${produto.id})">
+                        <div class="mt-auto mb-3">
+                            <span class="text-muted small d-block mb-0">R$ ${Number(produto.price * 1.15).toFixed(2)}</span> <h5 class="text-dark fw-bold mb-0">
+                                R$ ${Number(produto.price).toFixed(2)}
+                            </h5>
+                            <small class="text-success fw-medium">em 10x sem juros</small>
+                        </div>
+
+                        <button class="btn btn-primary w-100 fw-medium py-2 rounded-2" onclick="detalhes(${produto.id})">
                             Ver detalhes
                         </button>
                     </div>
@@ -209,4 +221,8 @@ function atualizarContadorHeader() {
         }
         componente.innerHTML = totalItensValidos;
     }
+}
+
+function comprar(){
+
 }
